@@ -1,33 +1,33 @@
 import random
+from datetime import datetime
 
-def fitness(b, s, i):
-    return b+s+i
-
-def survival(fit):
-    return float(fit/11)
-        
 class PersonClass(object):
-
+    random.seed(datetime.now())
+    
 # Constructor
-    def __init__(self, number, beauty, intelligence, strength):
-        self.beauty = beauty
-        self.intelligence = intelligence
-        self.strength = strength
+    def __init__(self, number, beauty, intelligence, strength): 
+        randNum = random.random()
+        
+        if(randNum < 0.01): #   1% Genetic Mutation 
+            if(randNum < 0.002):
+                self.beauty = (beauty + random.randint(0,10))%2
+                self.intelligence = intelligence
+                self.strength = strength
+            elif(randNum < 0.006):
+                self.intelligence = (intelligence + random.randint(0,10))%2
+                self.beauty = beauty
+                self.strength = strength
+            else:
+                self.strength = (strength + random.randint(0,10))%2
+                self.beauty = beauty
+                self.intelligence = intelligence
+        else:
+            self.beauty = beauty
+            self.intelligence = intelligence
+            self.strength = strength
+
         self.fit = strength + beauty + intelligence
-        self.surv = float(self.fit/11)
+        self.surv = float(self.fit/20)
         self.id = number
         self.age = 0
-
-# Deterministic  
-    mutation_choice = random.random() # returns num from 0 to 1
-   
-    def determine_mutation():
-        if(mutation_choice < 0.7): # 60% chance for no mutation
-            mutation_choice = 0
-        elif(mutation_choice < 0.75): # 5% chance for beauty to change
-            beauty = random.randint(0,2) # mutations are random
-        elif(mutation_choice < 0.85): # 10% chance for intelligence mutation
-            intelligence = random.randint(0,4)
-        elif(mutation_choice <= 1): # 15% chance for strength change
-            strength = rand.randint(0,5)
-            
+        self.mated = 0
